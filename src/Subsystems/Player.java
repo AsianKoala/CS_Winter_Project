@@ -12,7 +12,7 @@ import java.awt.geom.AffineTransform;
 import static java.awt.event.KeyEvent.*;
 
 public class Player extends Triangle implements Subsystem {
-    private Telemetry telemetry = new Telemetry();
+    private Telemetry telemetry = new Telemetry(0);
     private Color ourColor;
 
     private double clickAngle = 0;
@@ -57,7 +57,6 @@ public class Player extends Triangle implements Subsystem {
     private KeyAdapter ourKeyAdapter = new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent e) {
-            System.out.println("key pressed: " + e.toString());
             switch (e.getKeyCode()) {
                 case VK_D :
                     rightKeyReadTime = getCurrentTime();
@@ -83,7 +82,6 @@ public class Player extends Triangle implements Subsystem {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            System.out.println("key released: " + e.toString());
             switch (e.getKeyCode()) {
                 case VK_D :
                     rightKeyPressed = false;
@@ -205,21 +203,21 @@ public class Player extends Triangle implements Subsystem {
         AffineTransform at = new AffineTransform();
 
 
-        int xE = (top.x + left.x + right.x)/3;
-        int yE = (top.y + left.y + right.y)/3;
+        int xE = (int)(top.x + left.x + right.x)/3;
+        int yE = (int)(top.y + left.y + right.y)/3;
 
 
 
         int[] xPoints = {
-                left.x,
-                top.x,
-                right.x
+                (int)left.x,
+                (int)top.x,
+                (int)right.x
         };
 
         int[] yPoints = {
-                left.y,
-                top.y,
-                right.y
+                (int)left.y,
+                (int)top.y,
+                (int)right.y
         };
 
 
@@ -231,7 +229,7 @@ public class Player extends Triangle implements Subsystem {
 
         // Guide
         g2d.setColor(Color.RED);
-        g2d.drawLine(xE, yE, top.x, top.y);
+        g2d.drawLine(xE, yE, (int)top.x, (int)top.y);
     }
 
 
@@ -246,10 +244,10 @@ public class Player extends Triangle implements Subsystem {
     private void wrapAroundLogic() {
 
         // make them super big/small since they r arbitrary
-        int biggestX = -100000;
-        int biggestY = -100000;
-        int smallestX = 100000;
-        int smallestY = 100000;
+        double biggestX = -100000;
+        double biggestY = -100000;
+        double smallestX = 100000;
+        double smallestY = 100000;
         for(Point p : allVertices()) {
             biggestX = Math.max(biggestX, p.x);
             biggestY = Math.max(biggestY, p.y);
@@ -267,6 +265,11 @@ public class Player extends Triangle implements Subsystem {
     }
 
 
+    private void handleTelemetry() {
+        telemetry.addData("xPos, yPos: ", (top.x + left.x + right.x)/3 + (top.y + left.y + right.y)/3);
+    }
+
+
 
 
 
@@ -275,6 +278,8 @@ public class Player extends Triangle implements Subsystem {
         movementLogic();
         wrapAroundLogic();
         draw(g);
+
+        handleTelemetry();
         telemetry.run(g);
     }
 }

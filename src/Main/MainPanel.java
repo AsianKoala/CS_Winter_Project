@@ -15,8 +15,6 @@ public class MainPanel extends JPanel {
     private Background ourBackground = new Background(800, 800);
 
 
-
-
     public MainPanel() {
         setFocusable(true);
         requestFocusInWindow();

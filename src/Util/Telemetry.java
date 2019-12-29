@@ -7,7 +7,7 @@ import java.awt.*;
 // im just going to make it have its own thread cause im lazy
 public class Telemetry implements Subsystem {
     private long updateRate;
-    private String telemetryMessage;
+    private String telemetryMessage = "";
 
     public Telemetry(long telemetryRate) {
         updateRate = telemetryRate;
@@ -45,6 +45,7 @@ public class Telemetry implements Subsystem {
         addSpacer();
         addSpacer();
         System.out.println(telemetryMessage);
+        telemetryMessage = "";
         lastLoopTime = System.currentTimeMillis();
     }
 

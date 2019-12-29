@@ -32,7 +32,7 @@ public class Triangle {
     }
 
 
-    public void offset(int x, int y) {
+    public void offset(double x, double y) {
         for(int i=0; i<3; i++) {
             allVertices()[i].offsetPoint(x,y);
         }

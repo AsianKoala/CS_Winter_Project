@@ -18,7 +18,7 @@ public class Laser implements Subsystem {
 
 
     private void calculateNewPosition() {
-        laserLine.shiftAlongLine(speed);
+        laserLine.shiftLine(speed);
     }
 
 
@@ -26,6 +26,6 @@ public class Laser implements Subsystem {
     public void run(Graphics g) {
         calculateNewPosition();
         g.setColor(Color.BLACK);
-        g.drawLine(laserLine.startPoint.x, laserLine.startPoint.y, laserLine.endPoint.x, laserLine.endPoint.y);
+        g.drawLine((int)laserLine.startPoint.x, (int)laserLine.startPoint.y, (int)laserLine.endPoint.x, (int)laserLine.endPoint.y);
     }
 }

@@ -1,9 +1,9 @@
 package Geometry;
 
 public class Point {
-    public int x, y;
+    public double x, y;
 
-    public Point(int x, int y) {
+    public Point(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -13,13 +13,13 @@ public class Point {
         y = 0;
     }
 
-    public void offsetPoint(int dx, int dy) {
+    public void offsetPoint(double dx, double dy) {
          x += dx;
          y += dy;
     }
 
 
-    public void setPoint(int deltaX, int deltaY) {
+    public void setPoint(double deltaX, double deltaY) {
         x = deltaX;
         y = deltaY;
     }

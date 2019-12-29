@@ -1,6 +1,9 @@
 package Testers;
 
+import Geometry.BetterRectangle;
 import Geometry.Line;
+import Geometry.Point;
+import Subsystems.BetterLaser;
 import Subsystems.Laser;
 import Util.UtilMethods;
 
@@ -20,7 +23,13 @@ public class LaserTest {
 
 class LaserPanel extends JPanel {
 
-    private Laser laser = new Laser(new Line(400,400,405,405), 5);
+    private Line topLine = new Line(new Point(400,400), new Point(410, 400));
+//    private Line bottomLine = new Line(new Point(400, 395), new Point(410, 395));
+//    private BetterLaser laser = new BetterLaser(topLine, bottomLine, 5);
+
+
+    private BetterLaser laser = new BetterLaser(topLine);
+
 
 
     @Override
@@ -28,10 +37,8 @@ class LaserPanel extends JPanel {
         g.setColor(Color.WHITE);
         g.fillRect(0,0,getWidth(),getHeight());
 
-
         laser.run(g);
         UtilMethods.sleep(15);
-
         repaint();
     }
 }
