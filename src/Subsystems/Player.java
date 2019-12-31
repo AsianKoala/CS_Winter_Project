@@ -25,16 +25,11 @@ public class Player extends Triangle implements Subsystem {
     private int movementY = 0;
 
 
-    // wrap around
-    private int screenWidth = 800;
-    private int screenHeight = 800;
-
-
-
     // laser
-    ArrayList<Laser> ourLasers = new ArrayList<>();
-    private boolean is_F_Pressed = false;
+    private ArrayList<Laser> ourLasers = new ArrayList<>();
+    private boolean is_rmb_pressed = false;
     private Triangle guideTriangle;
+    private long lastReloadTime = 0;
 
 
     private boolean leftKeyPressed = false;
@@ -84,8 +79,6 @@ public class Player extends Triangle implements Subsystem {
                     bottomKeyPressed = true;
                     break;
 
-                case VK_F:
-                    is_F_Pressed = true;
             }
         }
 
@@ -107,9 +100,6 @@ public class Player extends Triangle implements Subsystem {
                 case VK_S:
                     bottomKeyPressed = false;
                     break;
-
-                case VK_F:
-                    is_F_Pressed = false;
 
             }
         }
@@ -156,6 +146,17 @@ public class Player extends Triangle implements Subsystem {
         @Override
         public void mousePressed(MouseEvent e) {
             clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x)/3f, e.getY() - (top.y + left.y + right.y)/3f)) + 90;
+
+            if(e.getButton() == MouseEvent.BUTTON3) {
+                is_rmb_pressed = true;
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if(e.getButton() == MouseEvent.BUTTON3) {
+                is_rmb_pressed = false;
+            }
         }
     };
 
@@ -274,7 +275,10 @@ public class Player extends Triangle implements Subsystem {
         }
 
 
+        // wrap around
+        int screenWidth = 800;
         if(biggestX < 0) { offset((screenWidth - 20) - biggestX, 0); }
+        int screenHeight = 800;
         if(biggestY < 0 ) { offset( 0, (screenHeight - 20) - biggestY); }
 
         if(smallestX > screenWidth) { offset(-smallestX + 20, 0); }
@@ -284,18 +288,21 @@ public class Player extends Triangle implements Subsystem {
 
 
     private void handleLasers(Graphics g) {
-        if(is_F_Pressed) {
-            ourLasers.add(new Laser(new Line(centroid(), new Point(guideTriangle.top.x, guideTriangle.top.y)), 3, 5));
-        }
-
-
-        for(Laser laser : ourLasers) {
-            if(laser.topLine.endPoint.x < 0 || laser.topLine.endPoint.x > 800 + laser.topLine.getLength()) {
-           //     ourLasers.remove(laser);
+        long reloadTime = 500;
+        if (is_rmb_pressed && (System.currentTimeMillis() - lastReloadTime > reloadTime)) {
+                ourLasers.add(new Laser(new Line(centroid(), new Point(guideTriangle.top.x, guideTriangle.top.y)), 3, 5));
+                lastReloadTime = System.currentTimeMillis();
             }
 
-            laser.run(g);
-        }
+
+            for (Laser laser : ourLasers) {
+//                if (laser.topLine.endPoint.x < 0 || laser.topLine.endPoint.x > 800 + laser.topLine.getLength()) {
+//                         ourLasers.remove(laser);
+//                }
+
+                laser.run(g);
+            }
+
     }
 
 

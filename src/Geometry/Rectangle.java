@@ -14,8 +14,15 @@ public class Rectangle {
 
 
     public void shiftRect(double d) {
-        topLine.shiftLine(d);
-        bottomLine.shiftLine(d);
+        if(topLine.getHeading() > 90 && topLine.getHeading() <= 270) {
+            topLine.shiftLine(-d);
+            bottomLine.shiftLine(-d);
+        }
+
+        else {
+            topLine.shiftLine(d);
+            bottomLine.shiftLine(d);
+        }
     }
 
 

@@ -11,12 +11,6 @@ public class Line {
     }
 
 
-    public Line(double x1, double y1, double x2, double y2) {
-        startPoint = new Point(x1, y1);
-        endPoint = new Point(x2, y2);
-    }
-
-
 
 
 
@@ -51,6 +45,17 @@ public class Line {
     }
 
 
+    public double getHeading() {
+        double heading = Math.atan2(endPoint.y - startPoint.y , endPoint.x - startPoint.x);
+
+        if(heading < 0) {
+            heading += Math.PI * 2;
+        }
+
+        return Math.toDegrees(heading);
+    }
+
+
 
 
 
@@ -59,6 +64,7 @@ public class Line {
         startPoint = startPoint.findExtendedPoint(d, getSlope());
         endPoint = endPoint.findExtendedPoint(d, getSlope());
     }
+
 
 
 
