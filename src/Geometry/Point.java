@@ -19,9 +19,17 @@ public class Point {
     }
 
 
-    public void setPoint(double deltaX, double deltaY) {
-        x = deltaX;
-        y = deltaY;
+    /**
+     *
+     * @param d distance of extended point
+     * @param m slope of line
+     * @return
+     */
+    public Point findExtendedPoint(double d, double m) {
+        double newX = x + (d / Math.sqrt(1 + m * m));
+        double newY = m * (newX - x) + y;
+
+        return new Point(newX, newY);
     }
 
 

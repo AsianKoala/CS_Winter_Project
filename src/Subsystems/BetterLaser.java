@@ -1,17 +1,16 @@
 package Subsystems;
 
 import Geometry.Line;
+import Geometry.Rectangle;
 
 import java.awt.*;
 
-public class BetterLaser extends Line implements Subsystem {
-    private double speed;
+public class BetterLaser extends Rectangle implements Subsystem {
+    double speed;
 
+    public BetterLaser(Line topLine, double width, double speed) {
+        super(topLine,width);
 
-
-
-    public BetterLaser(Line topLine, double speed) {
-        super(topLine.startPoint, topLine.endPoint);
         this.speed = speed;
     }
 
@@ -19,9 +18,24 @@ public class BetterLaser extends Line implements Subsystem {
 
     @Override
     public void run(Graphics g) {
-        shiftLine(speed);
         g.setColor(Color.GREEN);
+        shiftRect(speed);
 
-        g.fillRect((int)startPoint.x, (int)startPoint.y, (int)getLength(), 3);
+        int[] xPoints = {
+                (int)topLine.startPoint.x,
+                (int)topLine.endPoint.x,
+                (int)bottomLine.endPoint.x,
+                (int)bottomLine.startPoint.x
+        };
+
+        int[] yPoints = {
+                (int)topLine.startPoint.y,
+                (int)topLine.endPoint.y,
+                (int)bottomLine.endPoint.y,
+                (int)bottomLine.startPoint.y
+        };
+
+
+        g.drawPolygon(xPoints,yPoints,4);
     }
 }

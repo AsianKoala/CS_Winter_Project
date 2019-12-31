@@ -26,15 +26,22 @@ public class Line {
 
 
     public double getSlope() {
-        if(startPoint.x == endPoint.x) {
-            startPoint.x += 0.003;
+        double slope;
+        try {
+            slope = (startPoint.y - endPoint.y) / (startPoint.x - endPoint.x);
+        } catch(Exception e) { slope = (startPoint.y - endPoint.y) / (startPoint.x - endPoint.x + 0.0001); };
+
+        if(slope == 0) {
+            slope += 0.00001;
         }
 
-        if(startPoint.y == endPoint.y) {
-            startPoint.y += 0.003;
-        }
 
-        return (startPoint.y - endPoint.y) / (startPoint.x = endPoint.x);
+        return slope;
+    }
+
+
+    public double getParallelSlope() {
+        return -1/getSlope();
     }
 
 
@@ -43,27 +50,18 @@ public class Line {
 
 
     public void shiftLine(double d) {
-        startPoint = extendLine(startPoint, d, getSlope());
-        endPoint = extendLine(endPoint, d, getSlope());
-    }
-
-
-    public Point extendLine(Point startPoint, double d, double m) {
-        double x = startPoint.x + (d / Math.sqrt(1 + m * m));
-        double y = m * (x - startPoint.x) + startPoint.y;
-
-        return new Point(x , y);
+        startPoint = startPoint.findExtendedPoint(d, getSlope());
+        endPoint = endPoint.findExtendedPoint(d, getSlope());
     }
 
 
 
     public Line getParallelLine(double d) {
-        Point startingPoint = extendLine(startPoint, d, -1/getSlope());
-        Point endingPoint = extendLine(endPoint, d, -1/getSlope());
+        Point startingPoint = startPoint.findExtendedPoint(d, getParallelSlope());
+        Point endingPoint = endPoint.findExtendedPoint(d, getParallelSlope());
 
         return new Line(startingPoint, endingPoint);
     }
-
 
 
 
