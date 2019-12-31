@@ -11,8 +11,8 @@ public class UtilMethods {
     }
 
 
-    public static void runFrame(JFrame frame, Container container) {
-        frame = new JFrame();
+    public static void runFrame(Container container) {
+        JFrame frame = new JFrame();
         frame.setSize(800,800);
         frame.setLocation(0,0);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

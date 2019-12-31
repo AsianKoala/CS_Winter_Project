@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class BetterRectangleTest {
     public static void main(String[] args){
-        UtilMethods.runFrame(new JFrame(), new BetterRectanglePanel());
+        UtilMethods.runFrame(new BetterRectanglePanel());
     }
 }
 
@@ -53,9 +53,9 @@ class BetterRectanglePanel extends JPanel {
     public void paintComponent(Graphics g) {
         bg.run(g);
 
-//        pepegaLaser.run(g);
         bLaser.run(g);
 
-        System.out.println(bLaser);
+        UtilMethods.sleep(15);
+        repaint();
     }
 }
