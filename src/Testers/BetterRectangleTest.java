@@ -2,7 +2,7 @@ package Testers;
 
 import Geometry.Line;
 import Subsystems.Background;
-import Subsystems.BetterLaser;
+import Subsystems.Laser;
 import Util.UtilMethods;
 import Geometry.Point;
 
@@ -47,7 +47,7 @@ class BetterRectanglePanel extends JPanel {
 
     private Background bg = new Background(800,800);
 
-    private BetterLaser bLaser = new BetterLaser(new Line(new Point(400,400), new Point(450,450)), 2, 5);
+    private Laser bLaser = new Laser(new Line(new Point(400,400), new Point(450,450)), 2, 5);
 
     @Override
     public void paintComponent(Graphics g) {

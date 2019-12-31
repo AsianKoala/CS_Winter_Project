@@ -21,6 +21,18 @@ public class Triangle {
 
 
 
+    public double centroidX() {
+        return (top.x + left.x + right.x)/3;
+    }
+
+    public double centroidY() {
+        return (top.y + left.y + right.y)/3;
+    }
+
+    public Point centroid() {
+        return new Point(centroidX(), centroidY());
+    }
+
 
 
     public Point[] allVertices() {

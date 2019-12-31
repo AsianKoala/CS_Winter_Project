@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
@@ -31,8 +32,9 @@ public class Player extends Triangle implements Subsystem {
 
 
     // laser
-    ArrayList<BetterLaser> ourLasers = new ArrayList<>();
+    ArrayList<Laser> ourLasers = new ArrayList<>();
     private boolean is_F_Pressed = false;
+    private Triangle guideTriangle;
 
 
     private boolean leftKeyPressed = false;
@@ -106,6 +108,9 @@ public class Player extends Triangle implements Subsystem {
                     bottomKeyPressed = false;
                     break;
 
+                case VK_F:
+                    is_F_Pressed = false;
+
             }
         }
     };
@@ -169,6 +174,7 @@ public class Player extends Triangle implements Subsystem {
 
     public Player(Point top, Point left, Point right, Color color) {
         super(top,left,right);
+        guideTriangle = new Triangle(top,left,right);
         ourColor = color;
     }
 
@@ -222,7 +228,20 @@ public class Player extends Triangle implements Subsystem {
         at.setToRotation(Math.toRadians(clickAngle+90), xE, yE);
         g2d.setTransform(at);
         g2d.setColor(ourColor);
+
+
         g2d.drawPolygon(xPoints, yPoints, 3);
+
+
+        Point2D point1 = at.transform(new java.awt.Point(xPoints[0],yPoints[0]), new Point2D.Double());
+        Point2D point2 = at.transform(new java.awt.Point(xPoints[1],yPoints[1]), new Point2D.Double());
+        Point2D point3 = at.transform(new java.awt.Point(xPoints[2],yPoints[2]), new Point2D.Double());
+
+
+        guideTriangle.left = new Point(point1.getX(), point1.getY());
+        guideTriangle.top = new Point(point2.getX(), point2.getY());
+        guideTriangle.right = new Point(point3.getX(), point3.getY());
+
 
 
         // Guide
@@ -242,10 +261,10 @@ public class Player extends Triangle implements Subsystem {
     private void wrapAroundLogic() {
 
         // make them super big/small since they r arbitrary
-        double biggestX = -100000;
-        double biggestY = -100000;
-        double smallestX = 100000;
-        double smallestY = 100000;
+        double biggestX = -1000000000;
+        double biggestY = -1000000000;
+        double smallestX = 1000000000;
+        double smallestY = 1000000000;
         for(Point p : allVertices()) {
             biggestX = Math.max(biggestX, p.x);
             biggestY = Math.max(biggestY, p.y);
@@ -264,10 +283,15 @@ public class Player extends Triangle implements Subsystem {
 
 
 
-    private void laserLogic(Graphics g) {
-        for(BetterLaser laser : ourLasers) {
+    private void handleLasers(Graphics g) {
+        if(is_F_Pressed) {
+            ourLasers.add(new Laser(new Line(centroid(), new Point(guideTriangle.top.x, guideTriangle.top.y)), 3, 5));
+        }
+
+
+        for(Laser laser : ourLasers) {
             if(laser.topLine.endPoint.x < 0 || laser.topLine.endPoint.x > 800 + laser.topLine.getLength()) {
-                ourLasers.remove(laser);
+           //     ourLasers.remove(laser);
             }
 
             laser.run(g);
@@ -277,11 +301,17 @@ public class Player extends Triangle implements Subsystem {
 
 
 
+
     private void handleTelemetry() {
-        telemetry.addData("xPos, yPos: ", (top.x + left.x + right.x)/3 + (top.y + left.y + right.y)/3);
+        telemetry.addData("xPos, yPos", centroid().toString());
+        telemetry.addData("top" , top.toString());
+        telemetry.addData("left" , left.toString());
+        telemetry.addData("right" , right.toString());
+        telemetry.addLine("wtf");
+        telemetry.addLine(guideTriangle.top.toString());
+        telemetry.addLine(guideTriangle.left.toString());
+        telemetry.addLine(guideTriangle.right.toString());
     }
-
-
 
 
 
@@ -291,10 +321,12 @@ public class Player extends Triangle implements Subsystem {
     public void run(Graphics g) {
         movementLogic();
         wrapAroundLogic();
-        laserLogic(g);
         draw(g);
+        handleLasers(g);
 
         handleTelemetry();
+
+
         telemetry.run(g);
     }
 }

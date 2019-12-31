@@ -3,7 +3,7 @@ package Testers;
 import Geometry.Line;
 import Geometry.Point;
 import Subsystems.Background;
-import Subsystems.BetterLaser;
+import Subsystems.Laser;
 import Util.UtilMethods;
 
 import javax.swing.*;
@@ -20,14 +20,14 @@ public class BetterLaserArrayTest {
 
 class ArrayTestPanel extends JPanel {
 
-    private ArrayList<BetterLaser> ourLasers = new ArrayList<>();
+    private ArrayList<Laser> ourLasers = new ArrayList<>();
 
     public ArrayTestPanel() {
 
         for(int i=0; i<5; i++) {
             Point startPoint = new Point(400, 400 + 50 * i);
             Point endPoint = new Point(450, 400 + 50 * i);
-            ourLasers.add(new BetterLaser(new Line(startPoint,endPoint), 10,5));
+            ourLasers.add(new Laser(new Line(startPoint,endPoint), 10,5));
         }
     }
 
@@ -38,7 +38,7 @@ class ArrayTestPanel extends JPanel {
     public void paintComponent(Graphics g) {
         bg.run(g);
 
-        for(BetterLaser laser : ourLasers) {
+        for(Laser laser : ourLasers) {
             laser.run(g);
         }
 

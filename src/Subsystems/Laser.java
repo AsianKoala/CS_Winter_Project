@@ -5,10 +5,10 @@ import Geometry.Rectangle;
 
 import java.awt.*;
 
-public class BetterLaser extends Rectangle implements Subsystem {
+public class Laser extends Rectangle implements Subsystem {
     double speed;
 
-    public BetterLaser(Line topLine, double width, double speed) {
+    public Laser(Line topLine, double width, double speed) {
         super(topLine,width);
 
         this.speed = speed;
