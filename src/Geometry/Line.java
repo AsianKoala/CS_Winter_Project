@@ -26,22 +26,28 @@ public class Line {
 
 
     public double getSlope() {
-        double slope;
-        try {
-            slope = (startPoint.y - endPoint.y) / (startPoint.x - endPoint.x);
-        } catch(Exception e) { slope = (startPoint.y - endPoint.y) / (startPoint.x - endPoint.x + 0.0001); };
+        double slope = (endPoint.y - startPoint.y)/  (endPoint.x - startPoint.x);
 
         if(slope == 0) {
             slope += 0.00001;
         }
 
+        if(startPoint.x - endPoint.x == 0) {
+            slope = 0;
+        }
 
         return slope;
     }
 
 
     public double getParallelSlope() {
-        return -1/getSlope();
+        if(getSlope() == 0) {
+            return 0.00001;
+        }
+
+        else {
+            return 1/getSlope();
+        }
     }
 
 

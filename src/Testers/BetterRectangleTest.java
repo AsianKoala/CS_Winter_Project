@@ -49,13 +49,15 @@ class BetterRectanglePanel extends JPanel {
 
     private Background bg = new Background(800,800);
 
-    private Rectangle rect = new Rectangle(new Line(new Point(400,400), new Point(400,450)), 100);
-
+    private BetterLaser bLaser = new BetterLaser(new Line(new Point(400,400), new Point(400,450)), 5, 5);
 
     @Override
     public void paintComponent(Graphics g) {
         bg.run(g);
 
-        rect.draw(g);
+//        pepegaLaser.run(g);
+        bLaser.run(g);
+
+        System.out.println(bLaser);
     }
 }

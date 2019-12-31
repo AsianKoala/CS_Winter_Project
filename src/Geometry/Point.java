@@ -26,10 +26,16 @@ public class Point {
      * @return
      */
     public Point findExtendedPoint(double d, double m) {
-        double newX = x + (d / Math.sqrt(1 + m * m));
-        double newY = m * (newX - x) + y;
+        if(m != 0) {
+            double newX = x + (d / Math.sqrt(1 + m * m));
+            double newY = m * (newX - x) + y;
 
-        return new Point(newX, newY);
+            return new Point(newX, newY);
+        }
+
+        else {
+            return new Point(x, y + d);
+        }
     }
 
 

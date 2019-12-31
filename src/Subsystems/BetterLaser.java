@@ -16,23 +16,30 @@ public class BetterLaser extends Rectangle implements Subsystem {
 
 
 
+
+    @Override
+    public String toString() {
+        return topLine + "  ,  " + bottomLine;
+    }
+
+
     @Override
     public void run(Graphics g) {
         g.setColor(Color.GREEN);
         shiftRect(speed);
 
         int[] xPoints = {
-                (int)topLine.startPoint.x,
-                (int)topLine.endPoint.x,
-                (int)bottomLine.endPoint.x,
-                (int)bottomLine.startPoint.x
+                (int)Math.round(topLine.startPoint.x),
+                (int)Math.round(topLine.endPoint.x),
+                (int)Math.round(bottomLine.endPoint.x),
+                (int)Math.round(bottomLine.startPoint.x)
         };
 
         int[] yPoints = {
-                (int)topLine.startPoint.y,
-                (int)topLine.endPoint.y,
-                (int)bottomLine.endPoint.y,
-                (int)bottomLine.startPoint.y
+                (int)Math.round(topLine.startPoint.y),
+                (int)Math.round(topLine.endPoint.y),
+                (int)Math.round(bottomLine.endPoint.y),
+                (int)Math.round(bottomLine.startPoint.y)
         };
 
 

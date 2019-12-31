@@ -33,9 +33,65 @@ public class Rectangle {
 
 
 
-    /// DEBUGGINGG
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // ignore me
     public void draw(Graphics g) {
+
         int[] xPoints = {
                 (int)topLine.startPoint.x,
                 (int)topLine.endPoint.x,
@@ -50,7 +106,6 @@ public class Rectangle {
                 (int)bottomLine.startPoint.y,
         };
 
-        g.setColor(Color.PINK);
         g.drawPolygon(xPoints,yPoints,4);
     }
 }
