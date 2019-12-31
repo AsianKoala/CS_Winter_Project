@@ -1,10 +1,8 @@
 package Testers;
 
 import Geometry.Line;
-import Geometry.Rectangle;
 import Subsystems.Background;
 import Subsystems.BetterLaser;
-import Subsystems.PepegaLaser;
 import Util.UtilMethods;
 import Geometry.Point;
 
