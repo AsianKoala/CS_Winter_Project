@@ -47,7 +47,7 @@ class BetterRectanglePanel extends JPanel {
 
     private Background bg = new Background(800,800);
 
-    private BetterLaser bLaser = new BetterLaser(new Line(new Point(400,400), new Point(400,450)), 5, 5);
+    private BetterLaser bLaser = new BetterLaser(new Line(new Point(400,400), new Point(450,450)), 2, 5);
 
     @Override
     public void paintComponent(Graphics g) {
@@ -55,7 +55,7 @@ class BetterRectanglePanel extends JPanel {
 
         bLaser.run(g);
 
-        UtilMethods.sleep(15);
+        UtilMethods.sleep(50);
         repaint();
     }
 }

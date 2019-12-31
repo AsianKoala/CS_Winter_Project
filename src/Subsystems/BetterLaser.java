@@ -43,6 +43,6 @@ public class BetterLaser extends Rectangle implements Subsystem {
         };
 
 
-        g.drawPolygon(xPoints,yPoints,4);
+        g.fillPolygon(xPoints,yPoints,4);
     }
 }

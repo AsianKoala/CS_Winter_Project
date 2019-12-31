@@ -1,5 +1,6 @@
 package Subsystems;
 
+import Geometry.Line;
 import Geometry.Point;
 import Geometry.Triangle;
 import Util.Telemetry;
@@ -8,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -28,7 +30,9 @@ public class Player extends Triangle implements Subsystem {
 
 
 
-
+    // laser
+    ArrayList<BetterLaser> ourLasers = new ArrayList<>();
+    private boolean is_F_Pressed = false;
 
 
     private boolean leftKeyPressed = false;
@@ -77,6 +81,9 @@ public class Player extends Triangle implements Subsystem {
                     bottomKeyReadTime = getCurrentTime();
                     bottomKeyPressed = true;
                     break;
+
+                case VK_F:
+                    is_F_Pressed = true;
             }
         }
 
@@ -164,15 +171,6 @@ public class Player extends Triangle implements Subsystem {
         super(top,left,right);
         ourColor = color;
     }
-
-
-    public Player(Point top, Point left, Point right, Color color, int screenWidth, int screenHeight) {
-        super(top,left,right);
-        ourColor = color;
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
-    }
-
 
 
 
@@ -265,9 +263,25 @@ public class Player extends Triangle implements Subsystem {
     }
 
 
+
+    private void laserLogic(Graphics g) {
+        for(BetterLaser laser : ourLasers) {
+            if(laser.topLine.endPoint.x < 0 || laser.topLine.endPoint.x > 800 + laser.topLine.getLength()) {
+                ourLasers.remove(laser);
+            }
+
+            laser.run(g);
+        }
+    }
+
+
+
+
     private void handleTelemetry() {
         telemetry.addData("xPos, yPos: ", (top.x + left.x + right.x)/3 + (top.y + left.y + right.y)/3);
     }
+
+
 
 
 
@@ -277,6 +291,7 @@ public class Player extends Triangle implements Subsystem {
     public void run(Graphics g) {
         movementLogic();
         wrapAroundLogic();
+        laserLogic(g);
         draw(g);
 
         handleTelemetry();

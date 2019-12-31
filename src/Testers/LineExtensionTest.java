@@ -3,7 +3,6 @@ package Testers;
 import Geometry.Line;
 import Geometry.Point;
 
-import java.nio.file.StandardOpenOption;
 
 public class LineExtensionTest {
     public static void main(String[] args) {
@@ -20,7 +19,7 @@ public class LineExtensionTest {
 
 
 
-        System.out.println("");
+        System.out.println();
         System.out.println(line.getSlope());
     }
 }
