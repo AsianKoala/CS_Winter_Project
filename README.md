@@ -1,6 +1,5 @@
 # CS_Winter_Project
 -------------------
-
 To play a working version go to releases and download the latest .jar.
 
 I was bored over winter break and had a small assignment in CS (Foundations) so I 
