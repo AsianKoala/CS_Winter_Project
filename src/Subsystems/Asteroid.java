@@ -29,6 +29,7 @@ public class Asteroid extends Square implements Subsystem {
 
     public void setTargetPoint(Point targetPoint) { this.targetPoint = targetPoint; }
 
+
     @Override
     public void run(Graphics g) {
 
@@ -36,17 +37,17 @@ public class Asteroid extends Square implements Subsystem {
 
 
 
-
-
-
-    public static void runOurAsteroidsList() {
+    public static void runOurAsteroidsList(Graphics g) {
         for(Asteroid a : ourAsteroids) {
             if(Math.hypot(a.centroid().x - a.targetPoint.x, a.centroid().y - a.targetPoint.y) <= intersectionRadius) { removeList.add(a); } // removing all things that hit the thing
 
+            ourAsteroids.removeAll(removeList);
+
+
             // im not sure how much the asteroids should go but im going to just accel them at the slope
+            a.shiftRaw(1, a.slopeToPoint);
+
 
         }
     }
-
-
 }

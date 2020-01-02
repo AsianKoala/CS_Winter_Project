@@ -295,14 +295,17 @@ public class Player extends Triangle implements Subsystem {
             }
 
 
+            ArrayList<Laser> intersection = new ArrayList<>();
             for (Laser laser : ourLasers) {
-//                if (laser.topLine.endPoint.x < 0 || laser.topLine.endPoint.x > 800 + laser.topLine.getLength()) {
-//                         ourLasers.remove(laser);
-//                }
+                if (Math.hypot(400 - laser.topLine.startPoint.x, 400 - laser.topLine.startPoint.y) >= 800) {
+                         intersection.add(laser);
+                }
 
                 laser.run(g);
             }
 
+
+        ourLasers.removeAll(intersection); // garbage collector
     }
 
 
@@ -318,6 +321,7 @@ public class Player extends Triangle implements Subsystem {
         telemetry.addLine(guideTriangle.top.toString());
         telemetry.addLine(guideTriangle.left.toString());
         telemetry.addLine(guideTriangle.right.toString());
+        telemetry.addData("amount of lasers active", ourLasers.size());
     }
 
 
