@@ -8,8 +8,8 @@ import java.awt.*;
 public class backgroundtest {
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        frame.setSize(800,800);
-        frame.setLocation(0,0);
+        frame.setSize(800, 800);
+        frame.setLocation(0, 0);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(new BackgroundPanel());
         frame.setVisible(true);
@@ -19,12 +19,12 @@ public class backgroundtest {
 
 class BackgroundPanel extends JPanel {
 
-    private Background background = new Background(800,800);
+    private Background background = new Background(800, 800);
 
 
     @Override
     public void paintComponent(Graphics g) {
-     //   g.setColor(Color.BLACK);
+        //   g.setColor(Color.BLACK);
         background.initPoints(100);
         background.run(g);
 

@@ -6,21 +6,20 @@ import Subsystems.Background;
 import Subsystems.Player;
 import Subsystems.Scoreboard;
 
-import static Util.UtilMethods.*;
-
 import javax.swing.*;
 import java.awt.*;
+
+import static Util.UtilMethods.sleep;
 
 public class MainPanel extends JPanel {
 
     // init all our objects
-    private Player ourPlayer = new Player(new Point(415,400), new Point(400,430), new Point(430,430), Color.GREEN);
+    private Player ourPlayer = new Player(new Point(415, 400), new Point(400, 430), new Point(430, 430), Color.GREEN);
     private Background ourBackground = new Background(800, 800);
     private Scoreboard ourScoreboard = new Scoreboard();
 
 
-
-    public MainPanel() {
+    MainPanel() {
         setFocusable(true);
         requestFocusInWindow();
 
@@ -30,7 +29,7 @@ public class MainPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        if(!ourScoreboard.gameIsDone) {
+        if (!ourScoreboard.gameIsDone) {
             super.paintComponent(g);
 
             ourBackground.run(g);
@@ -41,9 +40,7 @@ public class MainPanel extends JPanel {
 
             sleep(15);
             repaint();
-        }
-
-        else {
+        } else {
             super.paintComponent(g);
             ourScoreboard.endingScreen(g);
         }

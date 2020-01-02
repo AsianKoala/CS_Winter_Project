@@ -1,6 +1,5 @@
 package Geometry;
 
-import java.util.ArrayList;
 
 public class Triangle {
     public Point top, left, right;
@@ -12,31 +11,21 @@ public class Triangle {
     }
 
 
-    public Triangle() {
-        top = new Point();
-        left = new Point();
-        right = new Point();
+    private double centroidX() {
+        return (top.x + left.x + right.x) / 3;
     }
 
-
-
-
-    public double centroidX() {
-        return (top.x + left.x + right.x)/3;
+    private double centroidY() {
+        return (top.y + left.y + right.y) / 3;
     }
 
-    public double centroidY() {
-        return (top.y + left.y + right.y)/3;
-    }
-
-    public Point centroid() {
+    protected Point centroid() {
         return new Point(centroidX(), centroidY());
     }
 
 
-
-    public Point[] allVertices() {
-        return new Point[] {
+    protected Point[] allVertices() {
+        return new Point[]{
                 top,
                 left,
                 right
@@ -44,9 +33,9 @@ public class Triangle {
     }
 
 
-    public void offset(double x, double y) {
-        for(int i=0; i<3; i++) {
-            allVertices()[i].offsetPoint(x,y);
+    protected void offset(double x, double y) {
+        for (int i = 0; i < 3; i++) {
+            allVertices()[i].offsetPoint(x, y);
         }
     }
 }

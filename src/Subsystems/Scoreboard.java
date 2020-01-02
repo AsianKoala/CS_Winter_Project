@@ -24,25 +24,26 @@ public class Scoreboard implements Subsystem {
     }
 
 
-
     @Override
     public void run(Graphics g) {
         lives = 5 - Asteroid.hitsTaken;
         score = Player.score;
 
         long currTime = System.currentTimeMillis();
-        remainingTime = (60 - (currTime - startTime)/1000);
+        remainingTime = (60 - (currTime - startTime) / 1000);
 
         draw(g);
 
 
-        if(remainingTime == 0 || lives == 0) { gameIsDone = true; }
+        if (remainingTime == 0 || lives == 0) {
+            gameIsDone = true;
+        }
     }
 
 
     public void endingScreen(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect(0,0,800,800);
+        g.fillRect(0, 0, 800, 800);
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 30));

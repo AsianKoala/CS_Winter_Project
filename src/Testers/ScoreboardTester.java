@@ -19,7 +19,6 @@ class ScoreboardPanel extends JPanel {
     private Background background = new Background();
 
 
-
     @Override
     public void paintComponent(Graphics g) {
         background.run(g);

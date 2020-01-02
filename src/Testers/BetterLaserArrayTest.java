@@ -17,28 +17,27 @@ public class BetterLaserArrayTest {
 }
 
 
-
 class ArrayTestPanel extends JPanel {
 
     private ArrayList<Laser> ourLasers = new ArrayList<>();
 
-    public ArrayTestPanel() {
+    ArrayTestPanel() {
 
-        for(int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             Point startPoint = new Point(400, 400 + 50 * i);
             Point endPoint = new Point(450, 400 + 50 * i);
-            ourLasers.add(new Laser(new Line(startPoint,endPoint), 10,5));
+            ourLasers.add(new Laser(new Line(startPoint, endPoint), 10, 5));
         }
     }
 
 
-    private Background bg = new Background(800,800);
+    private Background bg = new Background(800, 800);
 
     @Override
     public void paintComponent(Graphics g) {
         bg.run(g);
 
-        for(Laser laser : ourLasers) {
+        for (Laser laser : ourLasers) {
             laser.run(g);
         }
 

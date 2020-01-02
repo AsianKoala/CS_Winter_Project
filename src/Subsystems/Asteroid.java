@@ -30,32 +30,41 @@ public class Asteroid extends Square implements Subsystem {
     }
 
 
-    private void setTargetPoint(Point targetPoint) { this.targetPoint = targetPoint; }
-    private void setSlope(double slope) { this.slopeToPoint = slope; }
-    private void setDistanceToTargetPoint(double distanceToTargetPoint) { this.distanceToTargetPoint = distanceToTargetPoint; }
+    private void setTargetPoint(Point targetPoint) {
+        this.targetPoint = targetPoint;
+    }
 
-    void removeMe() { removeList.add(this); }
+    private void setSlope(double slope) {
+        this.slopeToPoint = slope;
+    }
+
+    private void setDistanceToTargetPoint(double distanceToTargetPoint) {
+        this.distanceToTargetPoint = distanceToTargetPoint;
+    }
+
+    void removeMe() {
+        removeList.add(this);
+    }
 
 
-    private boolean isLeft() { return centroid().x - targetPoint.x < 0; }
+    private boolean isLeft() {
+        return centroid().x - targetPoint.x < 0;
+    }
+
     private double getSlopeToPoint() {
 
-        slopeToPoint = (targetPoint.y - centroid().y)/(targetPoint.x - centroid().x);
+        slopeToPoint = (targetPoint.y - centroid().y) / (targetPoint.x - centroid().x);
 
-        if(targetPoint.x - centroid().x == 0) {
+        if (targetPoint.x - centroid().x == 0) {
             slopeToPoint = 0;
         }
 
-        if(targetPoint.y - centroid().y == 0) {
+        if (targetPoint.y - centroid().y == 0) {
             slopeToPoint = 0.00000000003;
         }
 
         return slopeToPoint;
     }
-
-
-
-
 
 
     @Override
@@ -65,32 +74,28 @@ public class Asteroid extends Square implements Subsystem {
     }
 
 
-
-
     /**
      * the big boi is right here
-     * @param g link to graphics
+     *
+     * @param g           link to graphics
      * @param targetPoint target point that asteroids are pointing towards
      */
     public static void runOurAsteroidsList(Graphics g, Point targetPoint) {
         handleGeneration(); // handle our asteroid generation
 
-        for(Asteroid a : ourAsteroids) {
+        for (Asteroid a : ourAsteroids) {
             a.setTargetPoint(targetPoint);
             a.setDistanceToTargetPoint(Math.hypot(a.centroid().x - a.targetPoint.x, a.centroid().y - a.targetPoint.y));
             a.setSlope((targetPoint.y - a.centroid().y) / (targetPoint.y - a.centroid().x));
 
             // check for intersection of targetPoint
-            if(a.distanceToTargetPoint < intersectionRadius || a.wantToRemoveMe) {
+            if (a.distanceToTargetPoint < intersectionRadius || a.wantToRemoveMe) {
                 a.removeMe();
                 hitsTaken++;
             }
 
 
-
             a.shiftAllPoints(speed, a.getSlopeToPoint(), a.isLeft());
-
-
 
 
             // drawing
@@ -101,10 +106,8 @@ public class Asteroid extends Square implements Subsystem {
     }
 
 
-
-
     private static void handleGeneration() {
-        if(System.currentTimeMillis() - lastLoopTime < 1000) {
+        if (System.currentTimeMillis() - lastLoopTime < 1000) {
             return;
         }
 
@@ -117,16 +120,16 @@ public class Asteroid extends Square implements Subsystem {
 
         Point leftPoint, rightPoint;
 
-        if(isYRandom) {
-            if(isLeft) {
-                leftPoint = new Point(0,verticalPercentage);
+        if (isYRandom) {
+            if (isLeft) {
+                leftPoint = new Point(0, verticalPercentage);
                 rightPoint = new Point(size, verticalPercentage);
             } else {
                 leftPoint = new Point(763, verticalPercentage);
                 rightPoint = new Point(783, verticalPercentage);
             }
         } else {
-            if(isTop) {
+            if (isTop) {
                 leftPoint = new Point(horizontalPercentage, 0);
                 rightPoint = new Point(horizontalPercentage + size, 0);
             } else {
@@ -136,13 +139,10 @@ public class Asteroid extends Square implements Subsystem {
         }
 
         ourAsteroids.add(new Asteroid(new Line(leftPoint, rightPoint)));
-        System.out.println(new Asteroid(new Line(leftPoint, rightPoint)) + "\n isYRandom: " + isYRandom +  "\n isLeft: " + isLeft  );
+        System.out.println(new Asteroid(new Line(leftPoint, rightPoint)) + "\n isYRandom: " + isYRandom + "\n isLeft: " + isLeft);
 
         lastLoopTime = System.currentTimeMillis();
     }
-
-
-
 
 
     @Override

@@ -1,17 +1,17 @@
 package Testers;
 
 import Geometry.Line;
+import Geometry.Point;
 import Subsystems.Background;
 import Subsystems.Laser;
 import Util.UtilMethods;
-import Geometry.Point;
 
 import javax.swing.*;
 import java.awt.*;
 
 
 public class BetterRectangleTest {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         UtilMethods.runFrame(new BetterRectanglePanel());
     }
 }
@@ -45,9 +45,9 @@ class BetterRectanglePanel extends JPanel {
 //    }
 
 
-    private Background bg = new Background(800,800);
+    private Background bg = new Background(800, 800);
 
-    private Laser bLaser = new Laser(new Line(new Point(400,400), new Point(450,450)), 2, 5);
+    private Laser bLaser = new Laser(new Line(new Point(400, 400), new Point(450, 450)), 2, 5);
 
     @Override
     public void paintComponent(Graphics g) {
