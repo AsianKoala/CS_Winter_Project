@@ -34,7 +34,20 @@ public class Asteroid extends Square implements Subsystem {
     private void removeMe() { removeList.add(this); }
 
     private boolean isLeft() { return centroid().x - targetPoint.x < 0; }
-    private double getSlopeToPoint() { return slopeToPoint + 0.00000000000003; }
+    private double getSlopeToPoint() {
+
+        slopeToPoint = (targetPoint.y - centroid().y)/(targetPoint.x - centroid().x);
+
+        if(targetPoint.x - centroid().x == 0) {
+            slopeToPoint = 0;
+        }
+
+        if(targetPoint.y - centroid().y == 0) {
+            slopeToPoint = 0.00000000003;
+        }
+
+        return slopeToPoint;
+    }
 
 
     @Override

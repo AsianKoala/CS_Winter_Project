@@ -1,6 +1,7 @@
 package Main;
 
 import Geometry.Point;
+import Subsystems.Asteroid;
 import Subsystems.Background;
 import Subsystems.Player;
 import Subsystems.Scoreboard;
@@ -34,6 +35,7 @@ public class MainPanel extends JPanel {
         ourBackground.run(g);
         ourScoreboard.run(g);
         ourPlayer.run(g);
+        Asteroid.runOurAsteroidsList(g, ourPlayer.getCentroid());
 
 
         sleep(15);

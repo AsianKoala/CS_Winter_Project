@@ -190,6 +190,8 @@ public class Player extends Triangle implements Subsystem {
     }
 
 
+    // link up with Asteroids
+    public Point getCentroid() { return new Point((top.x + left.x + right.x)/3, (top.y + left.y + right.y)/3); }
 
 
 
