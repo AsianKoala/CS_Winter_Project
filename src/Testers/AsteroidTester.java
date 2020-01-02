@@ -19,9 +19,7 @@ public class AsteroidTester {
 class AsteroidTesterPanel extends JPanel {
     private Background ourBackground = new Background();
 
-    public AsteroidTesterPanel() {
-        Asteroid.ourAsteroids.add(new Asteroid(new Line(new Point(200,600), new Point(220, 600))));
-    }
+
 
     @Override
     public void paintComponent(Graphics g) {

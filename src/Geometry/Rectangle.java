@@ -35,21 +35,21 @@ public class Rectangle {
 
 
 
-
-
-    public void shiftRaw(double dx, double dy) {
-        topLine.startPoint.x += dx;
-        topLine.startPoint.y += dy;
-
-        topLine.endPoint.x += dx;
-        topLine.endPoint.y += dy;
-
-        bottomLine.startPoint.x += dx;
-        bottomLine.startPoint.y += dy;
-
-        bottomLine.endPoint.x += dx;
-        bottomLine.endPoint.y += dy;
+    public void shiftAllPoints(double d, double m, boolean isLeft) {
+        if(isLeft) {
+            topLine.startPoint = topLine.startPoint.findExtendedPoint(d, m);
+            topLine.endPoint = topLine.endPoint.findExtendedPoint(d, m);
+            bottomLine.startPoint = bottomLine.startPoint.findExtendedPoint(d, m);
+            bottomLine.endPoint = bottomLine.endPoint.findExtendedPoint(d, m);
+        } else {
+            topLine.startPoint = topLine.startPoint.findExtendedPoint(-d,m);
+            topLine.endPoint = topLine.endPoint.findExtendedPoint(-d,m);
+            bottomLine.startPoint = bottomLine.startPoint.findExtendedPoint(-d,m);
+            bottomLine.endPoint = bottomLine.endPoint.findExtendedPoint(-d,m);
+        }
     }
+
+
 
 
     public int[] xPoints() {

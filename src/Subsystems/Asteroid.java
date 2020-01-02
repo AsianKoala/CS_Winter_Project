@@ -11,7 +11,7 @@ public class Asteroid extends Square implements Subsystem {
     public static ArrayList<Asteroid> ourAsteroids = new ArrayList<>(); // TODO: CHANGE THIS TO PRIVATE WHEN DONE TESTING
     private static ArrayList<Asteroid> removeList = new ArrayList<>();
     private static final double intersectionRadius = 15;
-    private static final double speed = 3;
+    private static final double speed = 5;
 
     public static int hitsTaken = 0;
     private static long lastLoopTime;
@@ -23,7 +23,7 @@ public class Asteroid extends Square implements Subsystem {
     private boolean wantToRemoveMe = false;
 
 
-    public Asteroid(Line topLine) {
+    private Asteroid(Line topLine) {
         super(topLine);
     }
 
@@ -34,7 +34,6 @@ public class Asteroid extends Square implements Subsystem {
     private void removeMe() { removeList.add(this); }
 
     private boolean isLeft() { return centroid().x - targetPoint.x < 0; }
-    private boolean isAbove() { return centroid().y - targetPoint.y < 0; }
     private double getSlopeToPoint() { return slopeToPoint + 0.00000000000003; }
 
 
@@ -50,10 +49,10 @@ public class Asteroid extends Square implements Subsystem {
     /**
      * the big boi is right here
      * @param g link to graphics
-     * @param targetPoint
+     * @param targetPoint target point that asteroids are pointing towards
      */
     public static void runOurAsteroidsList(Graphics g, Point targetPoint) {
-       // handleGeneration(); // handle our asteroid generation
+        handleGeneration(); // handle our asteroid generation
 
         for(Asteroid a : ourAsteroids) {
             a.setTargetPoint(targetPoint);
@@ -61,42 +60,14 @@ public class Asteroid extends Square implements Subsystem {
             a.setSlope((targetPoint.y - a.centroid().y) / (targetPoint.y - a.centroid().x));
 
             // check for intersection of targetPoint
-            if(a.distanceToTargetPoint < intersectionRadius) {
+            if(a.distanceToTargetPoint < intersectionRadius || a.wantToRemoveMe) {
                 a.removeMe();
                 hitsTaken++;
             }
-// just divide by speed lawl
-
-//            if(a.isAbove()) {
-//                if(a.isLeft()) {
-//                    a.shiftRaw(speed, speed / a.getSlopeToPoint());
-//                } else {
-//                    a.shiftRaw(-speed, speed / a.getSlopeToPoint());
-//                }
-//
-//            } else {
-//                if(a.isLeft()) {
-//                    a.shiftRaw(speed, speed / a.getSlopeToPoint());
-//                } else {
-//                    a.shiftRaw(-speed, -speed / a.getSlopeToPoint());
-//                }
-//            }
 
 
-            if(a.isAbove()) {
-                if(a.isLeft()) {
-                    a.shiftRaw(speed, speed / a.getSlopeToPoint());
-                } else {
-                    a.shiftRaw(-speed, speed / a.getSlopeToPoint());
-                }
 
-            } else {
-                if(a.isLeft()) {
-                    a.shiftRaw(speed, speed / a.getSlopeToPoint());
-                } else {
-                    a.shiftRaw(-speed, -speed / a.getSlopeToPoint());
-                }
-            }
+            a.shiftAllPoints(speed, a.getSlopeToPoint(), a.isLeft());
 
 
 
