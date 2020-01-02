@@ -3,6 +3,8 @@ package Main;
 import Geometry.Point;
 import Subsystems.Background;
 import Subsystems.Player;
+import Subsystems.Scoreboard;
+
 import static Util.UtilMethods.*;
 
 import javax.swing.*;
@@ -10,9 +12,11 @@ import java.awt.*;
 
 public class MainPanel extends JPanel {
 
-    // init all our members
-    private Player ourPlayer = new Player(new Point(15,0), new Point(0,30), new Point(30,30), Color.GREEN);
+    // init all our objects
+    private Player ourPlayer = new Player(new Point(415,400), new Point(400,430), new Point(430,430), Color.GREEN);
     private Background ourBackground = new Background(800, 800);
+    private Scoreboard ourScoreboard = new Scoreboard();
+
 
 
     public MainPanel() {
@@ -28,6 +32,7 @@ public class MainPanel extends JPanel {
         super.paintComponent(g);
 
         ourBackground.run(g);
+        ourScoreboard.run(g);
         ourPlayer.run(g);
 
 

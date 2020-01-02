@@ -1,7 +1,6 @@
 package Subsystems;
 
 import Geometry.Point;
-import Subsystems.Subsystem;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,9 +9,14 @@ public class Background implements Subsystem {
     private int width,height;
     public ArrayList<Point> allPoints = new ArrayList<>();
 
+    public Background() {
+        width = 800;
+        height = 800;
+    }
+
     public Background(int width, int height) {
-        this.width = width;
         this.height = height;
+        this.width = width;
     }
 
 

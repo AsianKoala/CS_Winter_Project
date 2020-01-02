@@ -16,6 +16,7 @@ public class UtilMethods {
         frame.setSize(800,800);
         frame.setLocation(0,0);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
         frame.setContentPane(container);
         frame.setVisible(true);
     }
