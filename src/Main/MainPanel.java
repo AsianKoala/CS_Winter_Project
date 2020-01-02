@@ -30,15 +30,22 @@ public class MainPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        if(!ourScoreboard.gameIsDone) {
+            super.paintComponent(g);
 
-        ourBackground.run(g);
-        ourScoreboard.run(g);
-        ourPlayer.run(g);
-        Asteroid.runOurAsteroidsList(g, ourPlayer.getCentroid());
+            ourBackground.run(g);
+            ourScoreboard.run(g);
+            ourPlayer.run(g);
+            Asteroid.runOurAsteroidsList(g, ourPlayer.getCentroid());
 
 
-        sleep(15);
-        repaint();
+            sleep(15);
+            repaint();
+        }
+
+        else {
+            super.paintComponent(g);
+            ourScoreboard.endingScreen(g);
+        }
     }
 }

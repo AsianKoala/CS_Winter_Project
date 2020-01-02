@@ -32,6 +32,10 @@ public class Player extends Triangle implements Subsystem {
     private long lastReloadTime = 0;
 
 
+    // linkage to scoreboard
+    static int score = 0;
+
+
     private boolean leftKeyPressed = false;
     private boolean topKeyPressed = false;
     private boolean rightKeyPressed = false;
@@ -197,11 +201,6 @@ public class Player extends Triangle implements Subsystem {
 
 
 
-
-
-
-
-
 // draws from the point numbers
     private void draw(Graphics g) {
         offsetMovement();
@@ -302,6 +301,18 @@ public class Player extends Triangle implements Subsystem {
                 if (Math.hypot(400 - laser.topLine.startPoint.x, 400 - laser.topLine.startPoint.y) >= 800) {
                          intersection.add(laser);
                 }
+
+
+                // laser intersection with asteroid
+                for(Asteroid a : Asteroid.ourAsteroids) {
+                    if(Math.hypot(laser.topLine.startPoint.x - a.centroid().x, laser.topLine.startPoint.y - a.centroid().y) <= Asteroid.size ||
+                            Math.hypot(laser.topLine.endPoint.x - a.centroid().x, laser.topLine.endPoint.y - a.centroid().y) <= Asteroid.size) {
+                        a.removeMe();
+                        score += 100;
+                    }
+                }
+
+
 
                 laser.run(g);
             }

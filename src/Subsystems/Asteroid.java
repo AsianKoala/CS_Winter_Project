@@ -8,13 +8,15 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Asteroid extends Square implements Subsystem {
-    public static ArrayList<Asteroid> ourAsteroids = new ArrayList<>(); // TODO: CHANGE THIS TO PRIVATE WHEN DONE TESTING
+    public static ArrayList<Asteroid> ourAsteroids = new ArrayList<>();
+
     private static ArrayList<Asteroid> removeList = new ArrayList<>();
     private static final double intersectionRadius = 15;
     private static final double speed = 5;
-
-    public static int hitsTaken = 0;
     private static long lastLoopTime;
+
+    static final int size = 20;
+    static int hitsTaken = 0;
 
 
     private Point targetPoint;
@@ -31,7 +33,9 @@ public class Asteroid extends Square implements Subsystem {
     private void setTargetPoint(Point targetPoint) { this.targetPoint = targetPoint; }
     private void setSlope(double slope) { this.slopeToPoint = slope; }
     private void setDistanceToTargetPoint(double distanceToTargetPoint) { this.distanceToTargetPoint = distanceToTargetPoint; }
-    private void removeMe() { removeList.add(this); }
+
+    void removeMe() { removeList.add(this); }
+
 
     private boolean isLeft() { return centroid().x - targetPoint.x < 0; }
     private double getSlopeToPoint() {
@@ -48,6 +52,10 @@ public class Asteroid extends Square implements Subsystem {
 
         return slopeToPoint;
     }
+
+
+
+
 
 
     @Override
@@ -112,7 +120,7 @@ public class Asteroid extends Square implements Subsystem {
         if(isYRandom) {
             if(isLeft) {
                 leftPoint = new Point(0,verticalPercentage);
-                rightPoint = new Point(20, verticalPercentage);
+                rightPoint = new Point(size, verticalPercentage);
             } else {
                 leftPoint = new Point(763, verticalPercentage);
                 rightPoint = new Point(783, verticalPercentage);
@@ -120,10 +128,10 @@ public class Asteroid extends Square implements Subsystem {
         } else {
             if(isTop) {
                 leftPoint = new Point(horizontalPercentage, 0);
-                rightPoint = new Point(horizontalPercentage + 20, 0);
+                rightPoint = new Point(horizontalPercentage + size, 0);
             } else {
                 leftPoint = new Point(horizontalPercentage, 740);
-                rightPoint = new Point(horizontalPercentage + 20, 740);
+                rightPoint = new Point(horizontalPercentage + size, 740);
             }
         }
 
