@@ -36,6 +36,7 @@ public class Rectangle {
 
 
 
+
     public void shiftRaw(double dx, double dy) {
         topLine.startPoint.x += dx;
         topLine.startPoint.y += dy;

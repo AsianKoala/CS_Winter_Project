@@ -1,5 +1,6 @@
 package Testers;
 
+import Geometry.Line;
 import Geometry.Point;
 import Subsystems.Asteroid;
 import Subsystems.Background;
@@ -10,24 +11,26 @@ import java.awt.*;
 
 public class AsteroidTester {
     public static void main(String[] args) {
-
+        UtilMethods.runFrame(new AsteroidTesterPanel());
     }
 }
 
 
 class AsteroidTesterPanel extends JPanel {
+    private Background ourBackground = new Background();
 
-    Background ourBackground = new Background();
-
-
+    public AsteroidTesterPanel() {
+        Asteroid.ourAsteroids.add(new Asteroid(new Line(new Point(200,600), new Point(220, 600))));
+    }
 
     @Override
     public void paintComponent(Graphics g) {
         ourBackground.run(g);
         Asteroid.runOurAsteroidsList(g, new Point(400,400));
+        g.drawString("" + Asteroid.ourAsteroids.size(), 15, 15);
 
 
-        UtilMethods.sleep(50);
+        UtilMethods.sleep(15);
         repaint();
     }
 }
