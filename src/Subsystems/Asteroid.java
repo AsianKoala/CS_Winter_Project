@@ -107,7 +107,7 @@ public class Asteroid extends Square implements Subsystem {
 
 
     private static void handleGeneration() {
-        if (System.currentTimeMillis() - lastLoopTime < 1000) {
+        if (System.currentTimeMillis() - lastLoopTime < 600) {
             return;
         }
 
