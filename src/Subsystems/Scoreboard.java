@@ -7,6 +7,7 @@ public class Scoreboard implements Subsystem {
     private long remainingTime;
 
     private int score;
+    private int lives = 5;
 
 
     public Scoreboard() {
@@ -19,6 +20,7 @@ public class Scoreboard implements Subsystem {
     public void giveMeScore(int score) {
         this.score = score;
     }
+    public void setLives(int lives) { this.lives = lives; }
 
 
     private void draw(Graphics g) {
@@ -26,6 +28,7 @@ public class Scoreboard implements Subsystem {
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.drawString("Time remaining: " + remainingTime, 15, 30);
         g.drawString("Score: " + score, 15, 60);
+        g.drawString("Lives: " + lives, 15, 90);
     }
 
 
@@ -38,6 +41,6 @@ public class Scoreboard implements Subsystem {
         draw(g);
 
 
-        if(remainingTime == 0) { System.exit(0); }
+        if(remainingTime == 0 || lives == 0) { System.exit(0); }
     }
 }

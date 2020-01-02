@@ -51,6 +51,26 @@ public class Rectangle {
     }
 
 
+    public int[] xPoints() {
+        return new int[]{
+                (int) topLine.startPoint.x,
+                (int) topLine.endPoint.x,
+                (int) bottomLine.endPoint.x,
+                (int) bottomLine.startPoint.x,
+        };
+    }
+
+
+    public int[] yPoints() {
+        return new int[]  {
+                (int)topLine.startPoint.y,
+                (int)topLine.endPoint.y,
+                (int)bottomLine.endPoint.y,
+                (int)bottomLine.startPoint.y,
+        };
+    }
+
+
 
 
     @Override
@@ -58,86 +78,4 @@ public class Rectangle {
         return topLine + " , " + bottomLine;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // ignore me
-    public void draw(Graphics g) {
-
-        int[] xPoints = {
-                (int)topLine.startPoint.x,
-                (int)topLine.endPoint.x,
-                (int)bottomLine.endPoint.x,
-                (int)bottomLine.startPoint.x,
-        };
-
-        int[] yPoints = {
-                (int)topLine.startPoint.y,
-                (int)topLine.endPoint.y,
-                (int)bottomLine.endPoint.y,
-                (int)bottomLine.startPoint.y,
-        };
-
-        g.drawPolygon(xPoints,yPoints,4);
-    }
 }
