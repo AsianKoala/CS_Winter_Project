@@ -5,11 +5,8 @@ import Util.ScreenHandler;
 import java.awt.*;
 
 import static Subsystems.Menu.enterPressed;
-import static Subsystems.Menu.lastMenuCalcTime;
 
 public class ControlScreen implements Subsystem {
-
-
 
 
     @Override
@@ -24,14 +21,13 @@ public class ControlScreen implements Subsystem {
 
 
         g.drawString("WASD -> Player translation controls", 100, 200);
-        g.drawString("Space -> Shoot in current direction", 100,250);
+        g.drawString("Space -> Shoot in current direction", 100, 250);
         g.drawString("Left click (dragging also works, flexible) -> Turn/Point in that direction", 100, 300);
         g.drawString("Right click -> Point and shoot in that direction", 100, 350);
         g.drawString("press enter to continue", 320, 700);
 
 
-
-        if(enterPressed) {
+        if (enterPressed) {
             ScreenHandler.nextScreen();
         }
     }

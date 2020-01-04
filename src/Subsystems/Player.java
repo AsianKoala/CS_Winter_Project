@@ -234,14 +234,10 @@ public class Player extends Triangle implements Subsystem {
     public Point getCentroid() {
         return new Point((top.x + left.x + right.x) / 3, (top.y + left.y + right.y) / 3);
     }
+
     private void offsetMovement() {
         offset(movementX, movementY);
     }
-
-
-
-
-
 
 
     private void wrapAroundLogic() {
@@ -277,12 +273,6 @@ public class Player extends Triangle implements Subsystem {
             offset(0, -smallestY + 20);
         }
     }
-
-
-
-
-
-
 
 
     // draws from the point numbers
@@ -337,13 +327,6 @@ public class Player extends Triangle implements Subsystem {
     // this changes the point numbers
 
 
-
-
-
-
-
-
-
     private void handleLasers(Graphics g) {
         long reloadTime = 500;
         if ((is_space_pressed || is_rmb_pressed) && (System.currentTimeMillis() - lastReloadTime > reloadTime)) {
@@ -375,12 +358,6 @@ public class Player extends Triangle implements Subsystem {
 
         ourLasers.removeAll(intersection); // garbage collector
     }
-
-
-
-
-
-
 
 
     private void handleTelemetry() {

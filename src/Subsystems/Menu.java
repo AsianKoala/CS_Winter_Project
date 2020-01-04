@@ -15,7 +15,7 @@ public class Menu implements Subsystem {
     static boolean equals_pressed = false;
 
 
-    static long lastMenuCalcTime = 0;
+    private static long lastMenuCalcTime = 0;
 
     private void calculations() {
         if (System.currentTimeMillis() - lastMenuCalcTime < 500) {
@@ -42,7 +42,7 @@ public class Menu implements Subsystem {
             lastMenuCalcTime = System.currentTimeMillis();
         }
 
-        if(equals_pressed) {
+        if (equals_pressed) {
             lastMenuCalcTime = System.currentTimeMillis();
         }
     }
@@ -66,9 +66,6 @@ public class Menu implements Subsystem {
         g.drawString("press - and = to modify speed", 230, 500);
         g.drawString("press [ and ] to modify gen rate", 230, 515);
         g.drawString("press enter to continue", 320, 700);
-
-
-
 
 
         if (enterPressed) {
