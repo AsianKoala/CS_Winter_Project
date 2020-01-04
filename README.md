@@ -7,7 +7,7 @@ made this pretty scuffed game. It took me about 24 hours worth of actual coding 
 
 #
 #
-# controls (very scuffed btw)
+# controls (this is in game also)
 
 - \- -> Decrease asteroid speed (Default 5)
 - \= -> Increase asteroid speed
