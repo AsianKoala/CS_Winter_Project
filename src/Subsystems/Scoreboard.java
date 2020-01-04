@@ -1,14 +1,16 @@
 package Subsystems;
 
+import Util.ScreenHandler;
+
 import java.awt.*;
 
 public class Scoreboard implements Subsystem {
     private long startTime = System.currentTimeMillis();
+    private long currTime = System.currentTimeMillis();
     private long remainingTime;
 
     private int score = 0;
     private int lives = 5;
-    public boolean gameIsDone = false;
 
 
     public Scoreboard() {
@@ -24,19 +26,26 @@ public class Scoreboard implements Subsystem {
     }
 
 
+    private int i = 0;
+
     @Override
     public void run(Graphics g) {
+        if (i == 0) {
+            startTime = System.currentTimeMillis();
+            i++;
+        }
+
         lives = 5 - Asteroid.hitsTaken;
         score = Player.score;
 
-        long currTime = System.currentTimeMillis();
+        currTime = System.currentTimeMillis();
         remainingTime = (60 - (currTime - startTime) / 1000);
 
         draw(g);
 
 
         if (remainingTime == 0 || lives == 0) {
-            gameIsDone = true;
+            ScreenHandler.nextScreen();
         }
     }
 
@@ -48,5 +57,10 @@ public class Scoreboard implements Subsystem {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.drawString(" Your score:       " + score, 250, 300);
+
+
+        if (System.currentTimeMillis() - currTime >= 15000) {
+            ScreenHandler.nextScreen();
+        }
     }
 }

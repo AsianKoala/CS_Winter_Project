@@ -7,12 +7,13 @@ import Geometry.Square;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static Util.Globals.asteroidSpeed;
+
 public class Asteroid extends Square implements Subsystem {
     public static ArrayList<Asteroid> ourAsteroids = new ArrayList<>();
 
     private static ArrayList<Asteroid> removeList = new ArrayList<>();
     private static final double intersectionRadius = 15;
-    private static final double speed = 5;
     private static long lastLoopTime;
 
     static final int size = 20;
@@ -27,7 +28,6 @@ public class Asteroid extends Square implements Subsystem {
 
     private Asteroid(Line topLine) {
         super(topLine);
-        ourAsteroids.add(this);
     }
 
 
@@ -96,7 +96,7 @@ public class Asteroid extends Square implements Subsystem {
             }
 
 
-            a.shiftAllPoints(speed, a.getSlopeToPoint(), a.isLeft());
+            a.shiftAllPoints(asteroidSpeed, a.getSlopeToPoint(), a.isLeft());
 
 
             // drawing
@@ -108,7 +108,7 @@ public class Asteroid extends Square implements Subsystem {
 
 
     private static void handleGeneration() {
-        if (System.currentTimeMillis() - lastLoopTime < 200) {
+        if (System.currentTimeMillis() - lastLoopTime < 700) {
             return;
         }
 
@@ -139,6 +139,7 @@ public class Asteroid extends Square implements Subsystem {
             }
         }
 
+        ourAsteroids.add(new Asteroid(new Line(leftPoint, rightPoint)));
         System.out.println(new Asteroid(new Line(leftPoint, rightPoint)) + "\n isYRandom: " + isYRandom + "\n isLeft: " + isLeft);
 
         lastLoopTime = System.currentTimeMillis();
