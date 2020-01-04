@@ -8,6 +8,8 @@ import Util.ScreenHandler;
 import javax.swing.*;
 import java.awt.*;
 
+import static Util.Globals.asteroidGeneration;
+import static Util.Globals.asteroidSpeed;
 import static Util.UtilMethods.sleep;
 
 public class MainPanel extends JPanel {
@@ -59,7 +61,6 @@ public class MainPanel extends JPanel {
                 break;
 
         }
-
         sleep(15);
         repaint();
     }

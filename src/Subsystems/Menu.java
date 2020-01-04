@@ -3,11 +3,14 @@ package Subsystems;
 import Util.ScreenHandler;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 
 import static Util.Globals.asteroidGeneration;
 import static Util.Globals.asteroidSpeed;
 
 public class Menu implements Subsystem {
+    private DecimalFormat df = new DecimalFormat("0.0");
+
     static boolean enterPressed = false;
     static boolean left_bracket_pressed = false;
     static boolean right_bracket_pressed = false;
@@ -18,7 +21,7 @@ public class Menu implements Subsystem {
     private static long lastMenuCalcTime = 0;
 
     private void calculations() {
-        if (System.currentTimeMillis() - lastMenuCalcTime < 500) {
+        if (System.currentTimeMillis() - lastMenuCalcTime < 250) {
             return;
         }
 
@@ -33,12 +36,12 @@ public class Menu implements Subsystem {
         }
 
         if (left_bracket_pressed) {
-            asteroidGeneration -= 50;
+            asteroidGeneration -= 0.1;
             lastMenuCalcTime = System.currentTimeMillis();
         }
 
         if (right_bracket_pressed) {
-            asteroidGeneration += 50;
+            asteroidGeneration += 0.1;
             lastMenuCalcTime = System.currentTimeMillis();
         }
 
@@ -59,7 +62,7 @@ public class Menu implements Subsystem {
 
         g.setFont(new Font("Arial", Font.PLAIN, 30));
         g.drawString(" Asteroid speed    :       " + asteroidSpeed, 230, 300);
-        g.drawString(" Asteroid gen rate :       " + asteroidGeneration, 230, 400);
+        g.drawString(" Asteroids per sec :       " + df.format(asteroidGeneration), 230, 400);
 
 
         g.setFont(new Font("Arial", Font.PLAIN, 17));

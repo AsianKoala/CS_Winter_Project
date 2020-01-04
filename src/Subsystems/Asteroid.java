@@ -7,6 +7,7 @@ import Geometry.Square;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static Util.Globals.asteroidGeneration;
 import static Util.Globals.asteroidSpeed;
 
 public class Asteroid extends Square implements Subsystem {
@@ -108,7 +109,7 @@ public class Asteroid extends Square implements Subsystem {
 
 
     private static void handleGeneration() {
-        if (System.currentTimeMillis() - lastLoopTime < 700) {
+        if (System.currentTimeMillis() - lastLoopTime < 1000/asteroidGeneration) {
             return;
         }
 
