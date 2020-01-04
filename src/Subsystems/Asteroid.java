@@ -27,6 +27,7 @@ public class Asteroid extends Square implements Subsystem {
 
     private Asteroid(Line topLine) {
         super(topLine);
+        ourAsteroids.add(this);
     }
 
 
@@ -138,7 +139,6 @@ public class Asteroid extends Square implements Subsystem {
             }
         }
 
-        ourAsteroids.add(new Asteroid(new Line(leftPoint, rightPoint)));
         System.out.println(new Asteroid(new Line(leftPoint, rightPoint)) + "\n isYRandom: " + isYRandom + "\n isLeft: " + isLeft);
 
         lastLoopTime = System.currentTimeMillis();

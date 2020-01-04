@@ -284,7 +284,7 @@ public class Player extends Triangle implements Subsystem {
 
         ArrayList<Laser> intersection = new ArrayList<>();
         for (Laser laser : ourLasers) {
-            if (Math.hypot(400 - laser.topLine.startPoint.x, 400 - laser.topLine.startPoint.y) >= 800) {
+            if (Math.hypot(400 - laser.topLine.startPoint.x, 400 - laser.topLine.startPoint.y) >= 400) {
                 intersection.add(laser);
             }
 
