@@ -5,29 +5,35 @@ import Geometry.Point;
 import Geometry.Triangle;
 import Util.Telemetry;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-import static java.awt.event.KeyEvent.*;
+import static Subsystems.Controls.*;
+
 
 public class Player extends Triangle implements Subsystem {
+    private static Player instance;
+
+    public static Player getInstance() {
+        return instance;
+    }
+
+
     private Telemetry telemetry = new Telemetry(0);
     private Color ourColor;
 
-    private double clickAngle = 0;
+
+
 
     // translation
-    private int movementX = 0;
-    private int movementY = 0;
+    public static int movementX = 0;
+    public static int movementY = 0;
 
 
     // laser
     private ArrayList<Laser> ourLasers = new ArrayList<>();
-    private boolean is_rmb_pressed = false;
     private Triangle guideTriangle;
     private long lastReloadTime = 0;
 
@@ -36,124 +42,9 @@ public class Player extends Triangle implements Subsystem {
     static int score = 0;
 
 
-    private boolean leftKeyPressed = false;
-    private boolean topKeyPressed = false;
-    private boolean rightKeyPressed = false;
-    private boolean bottomKeyPressed = false;
-
-    private long leftKeyReadTime = 0;
-    private long rightKeyReadTime = 0;
-    private long topKeyReadTime = 0;
-    private long bottomKeyReadTime = 0;
-
-    private long getCurrentTime() {
-        return System.currentTimeMillis();
-    }
-
-    /**
-     * Explanation of why we have to create booleans that we write to when we get inputs instead of writing to the actual used vars ( movementX & Y)
-     * ------------------------------------------------------------------------
-     * So previously, movementX and Y were changed directly from the inputs that we get from the keyboard. This was fine, but because of how key events are
-     * taken as 1 input, previous inputs are NOT saved; only the current input(1) input is read. Because of this, when you hold down a key, and then press another key, the 2nd key will be
-     * read, but because the 1st key is no longer the one who was pressed down. To solve this normal keyboards have this thing called rollover, but we have to program
-     * it in since KeyAdapter sucks that way. So we just assign values to booleans and have a logic method that sorts out movementX and movementY. Kinda dumb but whatever lol.
-     * I'm pretty sure im over complicating it since it actually doesn't really matter that much since the key that is held down after the 2nd key is released is actually read by KeyAdapter,
-     * but there is so much lag it annoys me.
-     */
-
-    private KeyAdapter ourKeyAdapter = new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            switch (e.getKeyCode()) {
-                case VK_D:
-                    rightKeyReadTime = getCurrentTime();
-                    rightKeyPressed = true;
-                    break;
-
-                case VK_A:
-                    leftKeyReadTime = getCurrentTime();
-                    leftKeyPressed = true;
-                    break;
-
-                case VK_W:
-                    topKeyReadTime = getCurrentTime();
-                    topKeyPressed = true;
-                    break;
-
-                case VK_S:
-                    bottomKeyReadTime = getCurrentTime();
-                    bottomKeyPressed = true;
-                    break;
-
-            }
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            switch (e.getKeyCode()) {
-                case VK_D:
-                    rightKeyPressed = false;
-                    break;
-
-                case VK_A:
-                    leftKeyPressed = false;
-                    break;
-
-                case VK_W:
-                    topKeyPressed = false;
-                    break;
-
-                case VK_S:
-                    bottomKeyPressed = false;
-                    break;
-
-            }
-        }
-    };
 
 
-    private void movementLogic() {
-        if (leftKeyPressed && rightKeyPressed) {
-            if (leftKeyReadTime > rightKeyReadTime) movementX = -5;
-            else movementX = 5;
-        } else if (leftKeyPressed) movementX = -5;
-        else if (rightKeyPressed) movementX = 5;
-        else movementX = 0;
 
-        if (topKeyPressed && bottomKeyPressed) {
-            if (topKeyReadTime > bottomKeyReadTime) movementY = -5;
-            else movementY = 5;
-        } else if (topKeyPressed) movementY = -5;
-        else if (bottomKeyPressed) movementY = 5;
-        else movementY = 0;
-    }
-
-
-    private MouseMotionAdapter ourMouseMotionAdapter = new MouseMotionAdapter() {
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x) / 3f, e.getY() - (top.y + left.y + right.y) / 3f)) + 90;
-        }
-    };
-
-
-    private MouseAdapter ourMouseAdapter = new MouseAdapter() {
-        @Override
-        public void mousePressed(MouseEvent e) {
-            clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x) / 3f, e.getY() - (top.y + left.y + right.y) / 3f)) + 90;
-
-            if (e.getButton() == MouseEvent.BUTTON3) {
-                is_rmb_pressed = true;
-            }
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            if (e.getButton() == MouseEvent.BUTTON3) {
-                is_rmb_pressed = false;
-            }
-        }
-    };
 
 
     /**
@@ -165,22 +56,24 @@ public class Player extends Triangle implements Subsystem {
 
     public Player(Point top, Point left, Point right, Color color) {
         super(top, left, right);
+
+        Player.instance = this;
+
         guideTriangle = new Triangle(top, left, right);
         ourColor = color;
     }
 
 
-    // link up with panel
-    public void initListeners(JPanel panel) {
-        panel.addMouseListener(ourMouseAdapter);
-        panel.addMouseMotionListener(ourMouseMotionAdapter);
-        panel.addKeyListener(ourKeyAdapter);
-    }
+
 
 
     // link up with Asteroids
     public Point getCentroid() {
         return new Point((top.x + left.x + right.x) / 3, (top.y + left.y + right.y) / 3);
+    }
+
+    private double getClickAngle() {
+        return -Math.toDegrees(Math.atan2(dragPoint.x - (top.x + left.x + right.x) / 3f, dragPoint.y - (top.y + left.y + right.y) / 3f)) + 90;
     }
 
 
@@ -209,7 +102,8 @@ public class Player extends Triangle implements Subsystem {
         };
 
 
-        at.setToRotation(Math.toRadians(clickAngle + 90), xE, yE);
+        at.setToRotation(Math.toRadians(getClickAngle() + 90), xE, yE);
+        dragPoint = guideTriangle.top;
         g2d.setTransform(at);
         g2d.setColor(ourColor);
 
@@ -318,6 +212,8 @@ public class Player extends Triangle implements Subsystem {
         telemetry.addLine(guideTriangle.right.toString());
         telemetry.addData("amount of lasers active", ourLasers.size());
     }
+
+
 
 
     @Override

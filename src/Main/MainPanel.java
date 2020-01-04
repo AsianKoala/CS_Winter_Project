@@ -1,10 +1,7 @@
 package Main;
 
 import Geometry.Point;
-import Subsystems.Asteroid;
-import Subsystems.Background;
-import Subsystems.Player;
-import Subsystems.Scoreboard;
+import Subsystems.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +20,7 @@ public class MainPanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
 
-        ourPlayer.initListeners(this);
+        Controls.initListeners(this);
     }
 
 

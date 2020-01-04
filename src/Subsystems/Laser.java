@@ -4,14 +4,19 @@ import Geometry.Line;
 import Geometry.Rectangle;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Laser extends Rectangle implements Subsystem {
+    static ArrayList<Laser> allLasers = new ArrayList<>();
+
+
     private double speed;
 
     public Laser(Line topLine, double width, double speed) {
         super(topLine, width);
-
         this.speed = speed;
+
+        allLasers.add(this);
     }
 
 
