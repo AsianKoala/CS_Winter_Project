@@ -10,7 +10,7 @@ made this pretty scuffed game. It took me about 24 hours worth of actual coding 
 # controls (very scuffed btw)
 
 - \- -> Decrease asteroid speed (Default 5)
-- \+ -> Increase asteroid speed
+- \= -> Increase asteroid speed
 - \[ -> Decrease asteroid generation (Default 700)
 - ] -> Increase asteroid generation
 - WASD -> Player translation controls
